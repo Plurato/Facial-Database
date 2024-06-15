@@ -1,0 +1,29 @@
+models\male\Asian\Liam.json
+models\male\Black\Kent.json
+models\male\Black\Remy.json
+models\male\Caucasian\Jude.json
+models\male\Caucasian\Julius.json
+models\male\Caucasian\Nico.json
+models\male\Caucasian\Otto.json
+models\male\Caucasian\Peter.json
+models\male\Caucasian\Theo.json
+models\male\Hispanic\Luke.json
+models\male\Middle Eastern\Cole.json
+models\male\Middle Eastern\George.json
+models\male\Middle Eastern\Theodore.json
+models\female\Asian\Abby.json
+models\female\Asian\Jane.json
+models\female\Asian\Luna.json
+models\female\Asian\Macy.json
+models\female\Black\Maya.json
+models\female\Black\Mila.json
+models\female\Black\Nora.json
+models\female\Black\Nova.json
+models\female\Black\Tina.json
+models\female\Caucasian\Anna.json
+models\female\Caucasian\Clara.json
+models\female\Caucasian\Debra.json
+models\female\Caucasian\Jessica.json
+models\female\Caucasian\Zoey.json
+models\female\Hispanic\Aria.json
+models\female\Hispanic\Tara.json
