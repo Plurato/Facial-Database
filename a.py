@@ -28,9 +28,14 @@ if current_dir not in sys.path:
 
 # 今日格式化时间
 DATE = time.strftime('%Y%m%d', time.localtime())
-ROOT_DIR = r'd:/Facial Database/SynHG-{}'.format(DATE)
-FOLDER_NAME = "human-test"
-DATA_SAVE_PATH = os.path.join(ROOT_DIR, FOLDER_NAME)
+
+if not os.path.exists('D:/Facial Database/DataBase/'):
+    os.makedirs('D:/Facial Database/DataBase/')
+
+entries = os.listdir('D:/Facial Database/DataBase/')
+file_count = len(entries)
+
+DATA_SAVE_PATH = r'D:/Facial Database/DataBase/SynHG-{}'.format(file_count)
 
 if not os.path.exists(DATA_SAVE_PATH):
     os.makedirs(DATA_SAVE_PATH)
@@ -50,7 +55,7 @@ THRESHOLD = 3.0
 INTERVAL = 10  
 
 # 动作读取
-DIRECTORY = "D:/Facial Database/bvh files/"
+DIRECTORY = "../bvh files/"
 
 def delete_default_objects():
     bpy.ops.object.select_all(action='SELECT')
@@ -286,11 +291,11 @@ def setup_movements():
     bpy.ops.object.mode_set(mode='OBJECT')
 
 def setup_environment():
-    folder_path = "D:/Facial Database/HDRIs/"
+    folder_path = "D:/Facial Database/HDRIs"
     all_files = [f for f in os.listdir(folder_path) if os.path.isfile(os.path.join(folder_path, f))]
     random_file = random.choice(all_files)
     name = os.path.basename(random_file)
-    bpy.ops.hdriw.set_image(name=name, filename=f"{folder_path}{name}")
+    bpy.ops.hdriw.set_image(name=name, filename=os.path.join(folder_path, name))
     random_degree = random.uniform(0, 360)
     bpy.data.window_managers["WinMan"].hdriw_properties.rotate = random_degree
 
@@ -386,7 +391,7 @@ def render_face_image():
     
     json_data = json.dumps(json_face, indent=4)
     # 将JSON字符串写入文件
-    with open("face_data.json", "w") as file:
+    with open(os.path.join(DATA_SAVE_PATH, "face_data.json") , "w") as file:
         file.write(json_data)
 
 def generate_normal_random_within_range(lower_bound, upper_bound):
@@ -664,7 +669,7 @@ def export_label():
     
     json_data = json.dumps(frames, indent=4)
     # 将JSON字符串写入文件
-    with open("frames.json", "w") as file:
+    with open(os.path.join(DATA_SAVE_PATH, "frames.json"), "w") as file:
         file.write(json_data)
     print("finished")
 
@@ -749,7 +754,7 @@ def find_significant_changes(json_file, threshold, interval):
 
 def generate_natural_blink():
     print("start generating natural blinks")
-    json_file_path = 'frames.json'
+    json_file_path = os.path.join(DATA_SAVE_PATH, 'frames.json')
     significant_changes = find_significant_changes(json_file_path, THRESHOLD, INTERVAL)
     # for i, blink in enumerate(significant_changes):
     #     if blink is True:
@@ -762,12 +767,12 @@ generate_natural_blink()
 
     
 def edit_json():
-    with open('frames.json', 'r', encoding='utf-8') as file:
+    with open(os.path.join(DATA_SAVE_PATH, 'frames.json'), 'r', encoding='utf-8') as file:
         data = json.load(file)
     for item in data:
         if 'blink_strength' in item:
             item["blink_strength"] = 1.0 - blink_strengths[item["frame_number"]]
-    with open('frames.json', 'w', encoding='utf-8') as file:
+    with open(os.path.join(DATA_SAVE_PATH, 'frames.json'), 'w', encoding='utf-8') as file:
         json.dump(data, file, ensure_ascii=False, indent=4)
 
 edit_json()
